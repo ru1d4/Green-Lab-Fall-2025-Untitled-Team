@@ -64,8 +64,8 @@ def ordered_rows(rows, n):
 def compute_rows(n, f):
     row_jobs = ((y, n) for y in range(n))
 
-    yield from map(f, row_jobs)
 
+    yield from map(f, row_jobs)
 
 def mandelbrot(n):
     # write = stdout.buffer.write
@@ -76,18 +76,15 @@ def mandelbrot(n):
             pass
             # write(row[1])
 
-if __name__ == '__main__':
-    import time
-    import io
-
-    n = 500
-
-    old_stdout = stdout
-    stdout = io.BytesIO()
-    mandelbrot(n)
-    stdout = old_stdout
-    print(time.time())
-    old_stdout = stdout
-    stdout = io.BytesIO()
-    mandelbrot(n)
-    stdout = old_stdout
+import time
+import io
+n = 500
+old_stdout = stdout
+stdout = io.BytesIO()
+mandelbrot(n)
+stdout = old_stdout
+print(time.time())
+old_stdout = stdout
+stdout = io.BytesIO()
+mandelbrot(n)
+stdout = old_stdout

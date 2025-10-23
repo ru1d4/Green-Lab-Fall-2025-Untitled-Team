@@ -68,8 +68,6 @@ class RunnerConfig:
         representing each run performed"""
         benchmark_name = FactorModel("benchmark", [
             "binary_trees/original.py",
-            "dac_mergesort/original.py",
-            "dijkstra/original.py",
             "fannkuch/original.py",
             "insertionsort/original.py",
             "mandlebrot/original.py",
@@ -96,7 +94,8 @@ class RunnerConfig:
     def before_experiment(self) -> None:
         """Perform any activity required before starting the experiment here
         Invoked only once during the lifetime of the program."""
-        pass
+        number_of_cpus = os.cpu_count()
+        subprocess.run(["./internals/warm_up", str(number_of_cpus), "600"])
 
     def before_run(self) -> None:
         """Perform any activity required before starting a run.
@@ -122,6 +121,7 @@ class RunnerConfig:
                             --summary \
                             -- docker run -it --name test_container --memory=1792m --cpus=1 --cpuset-cpus="3" porg python3 {benchmark_name}'
         elif compilation_tool == "numba":
+            benchmark_name = benchmark_name.replace("original", "numba_variant")
             profiler_cmd = f'sudo energibridge \
                         --interval 20 \
                         --max-execution 20 \
@@ -138,7 +138,6 @@ class RunnerConfig:
                             -- docker run -it --name test_container --memory=1792m --cpus=1 --cpuset-cpus="3" pcython python3 -c \'import {benchmark_name};\''
 
 
-        time.sleep(2) # allow the process to run a little before measuring
         energibridge_log = open(f'{context.run_dir}/energibridge.log', 'w')
         self.profiler = subprocess.Popen(shlex.split(profiler_cmd), stdout=energibridge_log)
 
@@ -147,8 +146,9 @@ class RunnerConfig:
 
         # No interaction. We just run it for XX seconds.
         # Another example would be to wait for the target to finish, e.g. via `self.target.wait()`
-        output.console_log("Running program for 15 seconds")
-        time.sleep(15)
+        # output.console_log("Running program for 15 seconds")
+        self.profiler.wait()
+        # time.sleep(15)
 
     def stop_measurement(self, context: RunnerContext) -> None:
         """Perform any activity here required for stopping measurements."""
@@ -165,7 +165,7 @@ class RunnerConfig:
         Returns a dictionary with keys `self.run_table_model.data_columns` and their values populated"""
 
         # energibridge.csv - Power consumption of the whole system
-        time.sleep(1)
+        time.sleep(20)
         with open("/tmp/test_container.log", "r") as f:
             lines = f.readlines()
             timestamp = int(lines[0].strip())
