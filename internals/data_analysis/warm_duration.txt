@@ -1,0 +1,334 @@
+# R 4.5.1 started.
+# 
+# R version 4.5.1 (2025-06-13) -- "Great Square Root"
+# Copyright (C) 2025 The R Foundation for Statistical Computing
+# Platform: aarch64-apple-darwin20
+# 
+# R is free software and comes with ABSOLUTELY NO WARRANTY.
+# You are welcome to redistribute it under certain conditions.
+# Type 'license()' or 'licence()' for distribution details.
+# 
+#   Natural language support but running in an English locale
+# 
+# R is a collaborative project with many contributors.
+# Type 'contributors()' for more information and
+# 'citation()' on how to cite R or R packages in publications.
+# 
+# Type 'demo()' for some demos, 'help()' for on-line help, or
+# 'help.start()' for an HTML browser interface to help.
+# Type 'q()' to quit R.
+# 
+source("/Users/ruidazhou/code/green-lab/Warm Duration.R", echo = TRUE)
+# 
+# > install.packages(c("tidyverse", "ggplot2", "bestNormalize", "ARTool", "lmerTest", "xtable",
+# +                   "dplyr", "viridis"))
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/tidyverse_2.0.0.tgz'
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/ggplot2_4.0.0.tgz'
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/bestNormalize_1.9.1.tgz'
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/ARTool_0.11.2.tgz'
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/lmerTest_3.1-3.tgz'
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/xtable_1.8-4.tgz'
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/dplyr_1.1.4.tgz'
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/viridis_0.6.5.tgz'
+# 
+# The downloaded binary packages are in
+# 	/var/folders/7q/6bh483l55dldmn0m93yq85th0000gn/T//RtmpBSAN0P/downloaded_packages
+# 
+# > install.packages("remotes")
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/remotes_2.5.0.tgz'
+# Content type 'application/x-gzip' length 431784 bytes (421 KB)
+# ==================================================
+# downloaded 421 KB
+# 
+# 
+# The downloaded binary packages are in
+# 	/var/folders/7q/6bh483l55dldmn0m93yq85th0000gn/T//RtmpBSAN0P/downloaded_packages
+# 
+# > install.packages("FSA")
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/FSA_0.10.0.tgz'
+# Content type 'application/x-gzip' length 1372832 bytes (1.3 MB)
+# ==================================================
+# downloaded 1.3 MB
+# 
+# 
+# The downloaded binary packages are in
+# 	/var/folders/7q/6bh483l55dldmn0m93yq85th0000gn/T//RtmpBSAN0P/downloaded_packages
+# 
+# > install.packages("effsize")
+# trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/effsize_0.8.1.tgz'
+# Content type 'application/x-gzip' length 64409 bytes (62 KB)
+# ==================================================
+# downloaded 62 KB
+# 
+# 
+# The downloaded binary packages are in
+# 	/var/folders/7q/6bh483l55dldmn0m93yq85th0000gn/T//RtmpBSAN0P/downloaded_packages
+# 
+# > library(effsize)
+# 
+# > library(FSA)
+# ## FSA v0.10.0. See citation('FSA') if used in publication.
+# ## Run fishR() for related website and fishR('IFAR') for related book.
+# 
+# > library(tidyverse)
+# ── Attaching core tidyverse packages ─────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+# ✔ dplyr     1.1.4     ✔ readr     2.1.5
+# ✔ forcats   1.0.1     ✔ stringr   1.5.2
+# ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+# ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+# ✔ purrr     1.1.0     
+# ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+# ✖ dplyr::filter() masks stats::filter()
+# ✖ dplyr::lag()    masks stats::lag()
+# ℹ Use the conflicted package ([object Object])  to force all conflicts to become errors
+# 
+# > library(ggplot2)
+# 
+# > library(bestNormalize)
+# Registered S3 method overwritten by 'butcher':
+#   method                 from    
+#   as.character.dev_topic generics
+# 
+# > library(ARTool)
+# Registered S3 methods overwritten by 'car':
+#   method       from
+#   hist.boot    FSA 
+#   confint.boot FSA 
+# 
+# > library(lmerTest)
+# Loading required package: lme4
+# Loading required package: Matrix
+# 
+# Attaching package: ‘Matrix’
+# 
+# The following objects are masked from ‘package:tidyr’:
+# 
+#     expand, pack, unpack
+# 
+# 
+# Attaching package: ‘lmerTest’
+# 
+# The following object is masked from ‘package:lme4’:
+# 
+#     lmer
+# 
+# The following object is masked from ‘package:stats’:
+# 
+#     step
+# 
+# 
+# > library(xtable)
+# 
+# > library(remotes)
+# 
+# > remotes::install_github("hrbrmstr/hrbrthemes")
+# Using GitHub PAT from the git credential store.
+# Skipping install of 'hrbrthemes' from a github remote, the SHA1 (d3fd0294) has not changed since last install.
+#   Use `force = TRUE` to force installation
+# 
+# > library(dplyr)
+# 
+# > library(viridis)
+# Loading required package: viridisLite
+# 
+# > library(hrbrthemes)
+# 
+# > dat_data <- read.csv("./run_table.csv") %>%
+# +   select(
+# +     benchmark,
+# +     compilation,
+# +     cold_start_energy, warm_start_energy,
+# +     cold_s .... [TRUNCATED] 
+# 
+# > # Data preparation
+# > dat_dependent_var <- dat_data %>%
+# +   select(benchmark, compilation, warm_start_duration) %>%
+# +   mutate(
+# +     benchmark = fac .... [TRUNCATED] 
+# 
+# > # Min Max Mean Median SD
+# > summary_stats <- dat_dependent_var %>%
+# +   group_by(benchmark, compilation) %>%
+# +   summarise(
+# +     n = n(),
+# +     min = .... [TRUNCATED] 
+# 
+# > # Descriptive stats (min, max, mean, median, sd):
+# > print(summary_stats, n = Inf)
+# # A tibble: 24 × 8
+#    benchmark                   compilation     n   min   max  mean median    sd
+#    <fct>                       <fct>       <int> <int> <int> <dbl>  <int> <dbl>
+#  1 binary_trees                cython         15  1217  1502 1382.   1407  88.4
+#  2 binary_trees                numba          15   666  1008  790.    761  90.6
+#  3 binary_trees                original       15  1863  2395 2060.   2034 159. 
+#  4 fannkuch                    cython         15   324   438  351.    343  37.8
+#  5 fannkuch                    numba          15   153   211  185.    191  22.4
+#  6 fannkuch                    original       15   381   628  462.    457  74.8
+#  7 insertionsort               cython         15   495   875  571     552  92.8
+#  8 insertionsort               numba          15   305   401  360.    362  30.5
+#  9 insertionsort               original       15   533   799  602.    572  71.0
+# 10 mandlebrot                  cython         15   457   647  514.    477  54.6
+# 11 mandlebrot                  numba          15   172   249  199.    191  20.2
+# 12 mandlebrot                  original       15   552   685  609.    609  37.4
+# 13 nbody                       cython         15  1312  1578 1410.   1388  87.6
+# 14 nbody                       numba          15   191   287  220.    210  34.5
+# 15 nbody                       original       15  1217  1647 1344.   1312 109. 
+# 16 recur_matrix_multiplication cython         15   438   685  503.    495  60.9
+# 17 recur_matrix_multiplication numba          15   457   533  499.    495  24.0
+# 18 recur_matrix_multiplication original       15  1065  1198 1133.   1122  36.5
+# 19 richards                    cython         15  1331  1598 1463.   1483  83.4
+# 20 richards                    numba          15   153   191  172.    172  12.4
+# 21 richards                    original       15  1084  1464 1149.   1103 102. 
+# 22 spectral_norm               cython         15  2073  2385 2236.   2243  98.5
+# 23 spectral_norm               numba          15   191   287  227.    211  27.8
+# 24 spectral_norm               original       15  2441  2802 2578    2574  81.9
+# 
+# > # Volin + Box
+# > ggplot(dat_dependent_var, aes(x = compilation, y = warm_start_duration, fill = compilation)) +
+# +   geom_violin(alpha = 0.8, trim = F .... [TRUNCATED] 
+# 
+# > # Normality check
+# > shapiro_results <- dat_dependent_var %>%
+# +   group_by(benchmark, compilation) %>%
+# +   summarise(
+# +     n = n(),
+# +     p_value =  .... [TRUNCATED] 
+# `summarise()` has grouped output by 'benchmark'. You can override using the `.groups` argument.
+# 
+# > # Normality Check Results
+# > print(shapiro_results, n = Inf)
+# # A tibble: 24 × 5
+#    benchmark                   compilation     n   p_value normal
+#    <fct>                       <fct>       <int>     <dbl> <chr> 
+#  1 binary_trees                cython         15 0.176     Yes   
+#  2 binary_trees                numba          15 0.266     Yes   
+#  3 binary_trees                original       15 0.182     Yes   
+#  4 fannkuch                    cython         15 0.000605  No    
+#  5 fannkuch                    numba          15 0.0233    No    
+#  6 fannkuch                    original       15 0.0327    No    
+#  7 insertionsort               cython         15 0.0000919 No    
+#  8 insertionsort               numba          15 0.172     Yes   
+#  9 insertionsort               original       15 0.0114    No    
+# 10 mandlebrot                  cython         15 0.00632   No    
+# 11 mandlebrot                  numba          15 0.0145    No    
+# 12 mandlebrot                  original       15 0.269     Yes   
+# 13 nbody                       cython         15 0.0252    No    
+# 14 nbody                       numba          15 0.00260   No    
+# 15 nbody                       original       15 0.00735   No    
+# 16 recur_matrix_multiplication cython         15 0.00407   No    
+# 17 recur_matrix_multiplication numba          15 0.196     Yes   
+# 18 recur_matrix_multiplication original       15 0.438     Yes   
+# 19 richards                    cython         15 0.419     Yes   
+# 20 richards                    numba          15 0.00510   No    
+# 21 richards                    original       15 0.000126  No    
+# 22 spectral_norm               cython         15 0.344     Yes   
+# 23 spectral_norm               numba          15 0.00371   No    
+# 24 spectral_norm               original       15 0.0873    Yes   
+# 
+# > # Kruskal–Wallis test
+# > kw_result <- dat_dependent_var %>%
+# +   group_by(benchmark) %>%
+# +   summarize(
+# +     kw = list(kruskal.test(warm_start_durati .... [TRUNCATED] 
+# 
+# > # Kruskal-Wallis Test Results
+# > print(kw_result, n = Inf)
+# # A tibble: 8 × 6
+#   benchmark                   kw      statistic    df       p_value significant
+#   <fct>                       <list>      <dbl> <int>         <dbl> <chr>      
+# 1 binary_trees                <htest>      39.2     2 0.00000000314 Yes        
+# 2 fannkuch                    <htest>      36.9     2 0.00000000951 Yes        
+# 3 insertionsort               <htest>      31.5     2 0.000000142   Yes        
+# 4 mandlebrot                  <htest>      36.6     2 0.0000000114  Yes        
+# 5 nbody                       <htest>      32.4     2 0.0000000908  Yes        
+# 6 recur_matrix_multiplication <htest>      29.7     2 0.000000352   Yes        
+# 7 richards                    <htest>      38.3     2 0.00000000487 Yes        
+# 8 spectral_norm               <htest>      39.2     2 0.00000000305 Yes        
+# 
+# > # Post-hoc test
+# > kw_result_dunn <- dat_dependent_var %>%
+# +   group_by(benchmark) %>%
+# +   summarize(
+# +     dunn = list(dunnTest(
+# +       warm_start_ .... [TRUNCATED] 
+# 
+# > # Dunn's post-hoc test results (Bonferroni-adjusted):
+# > print(kw_result_dunn, n = Inf)
+# # A tibble: 24 × 6
+#    benchmark                   Comparison             Z  P.unadj         P.adj significant
+#    <fct>                       <chr>              <dbl>    <dbl>         <dbl> <chr>      
+#  1 binary_trees                cython - numba     3.13  1.75e- 3 0.00526       Yes        
+#  2 binary_trees                cython - original -3.13  1.75e- 3 0.00526       Yes        
+#  3 binary_trees                numba - original  -6.26  3.91e-10 0.00000000117 Yes        
+#  4 fannkuch                    cython - numba     3.34  8.47e- 4 0.00254       Yes        
+#  5 fannkuch                    cython - original -2.73  6.32e- 3 0.0189        Yes        
+#  6 fannkuch                    numba - original  -6.07  1.30e- 9 0.00000000389 Yes        
+#  7 insertionsort               cython - numba     3.99  6.51e- 5 0.000195      Yes        
+#  8 insertionsort               cython - original -1.42  1.55e- 1 0.465         No         
+#  9 insertionsort               numba - original  -5.42  6.12e- 8 0.000000184   Yes        
+# 10 mandlebrot                  cython - numba     3.39  6.90e- 4 0.00207       Yes        
+# 11 mandlebrot                  cython - original -2.64  8.31e- 3 0.0249        Yes        
+# 12 mandlebrot                  numba - original  -6.03  1.61e- 9 0.00000000484 Yes        
+# 13 nbody                       cython - numba     5.56  2.74e- 8 0.0000000823  Yes        
+# 14 nbody                       cython - original  1.70  8.89e- 2 0.267         No         
+# 15 nbody                       numba - original  -3.86  1.15e- 4 0.000346      Yes        
+# 16 recur_matrix_multiplication cython - numba    -0.265 7.91e- 1 1             No         
+# 17 recur_matrix_multiplication cython - original -4.85  1.24e- 6 0.00000373    Yes        
+# 18 recur_matrix_multiplication numba - original  -4.58  4.58e- 6 0.0000138     Yes        
+# 19 richards                    cython - numba     6.19  6.21e-10 0.00000000186 Yes        
+# 20 richards                    cython - original  2.96  3.11e- 3 0.00933       Yes        
+# 21 richards                    numba - original  -3.23  1.24e- 3 0.00373       Yes        
+# 22 spectral_norm               cython - numba     3.13  1.74e- 3 0.00522       Yes        
+# 23 spectral_norm               cython - original -3.13  1.74e- 3 0.00522       Yes        
+# 24 spectral_norm               numba - original  -6.26  3.79e-10 0.00000000114 Yes        
+# 
+# > # quantify difference (% diff and cliff's delta)
+# > # For each significant pair from Dunn's test, compute:
+# > #   (a) percentage difference in medians .... [TRUNCATED] 
+# 
+# > # 2) Start from significant Dunn pairs and attach both groups' vectors/medians
+# > filtered_yes_dunn <- kw_result_dunn %>%
+# +   filter(significant == " ..." ... [TRUNCATED] 
+# 
+# > # Effect size (Cliff's delta) and percentage median difference for significant Dunn pairs:
+# > print(filtered_yes_dunn, n = Inf)
+# # A tibble: 21 × 10
+#    benchmark                   group1 group2      n1    n2 median1 median2 pct_diff cliffs_delta cliffs_interpretation
+#    <fct>                       <chr>  <chr>    <int> <int>   <int>   <int>    <dbl>        <dbl> <chr>                
+#  1 binary_trees                cython numba       15    15    1407     761    -84.9        1     large                
+#  2 binary_trees                cython original    15    15    1407    2034     30.8       -1     large                
+#  3 binary_trees                numba  original    15    15     761    2034     62.6       -1     large                
+#  4 fannkuch                    cython numba       15    15     343     191    -79.6        1     large                
+#  5 fannkuch                    cython original    15    15     343     457     24.9       -0.871 large                
+#  6 fannkuch                    numba  original    15    15     191     457     58.2       -1     large                
+#  7 insertionsort               cython numba       15    15     552     362    -52.5        1     large                
+#  8 insertionsort               numba  original    15    15     362     572     36.7       -1     large                
+#  9 mandlebrot                  cython numba       15    15     477     191   -150.         1     large                
+# 10 mandlebrot                  cython original    15    15     477     609     21.7       -0.84  large                
+# 11 mandlebrot                  numba  original    15    15     191     609     68.6       -1     large                
+# 12 nbody                       cython numba       15    15    1388     210   -561.         1     large                
+# 13 nbody                       numba  original    15    15     210    1312     84.0       -1     large                
+# 14 recur_matrix_multiplication cython original    15    15     495    1122     55.9       -1     large                
+# 15 recur_matrix_multiplication numba  original    15    15     495    1122     55.9       -1     large                
+# 16 richards                    cython numba       15    15    1483     172   -762.         1     large                
+# 17 richards                    cython original    15    15    1483    1103    -34.5        0.942 large                
+# 18 richards                    numba  original    15    15     172    1103     84.4       -1     large                
+# 19 spectral_norm               cython numba       15    15    2243     211   -963.         1     large                
+# 20 spectral_norm               cython original    15    15    2243    2574     12.9       -1     large                
+# 21 spectral_norm               numba  original    15    15     211    2574     91.8       -1     large                
+# Warning messages:
+# 1: There was 1 warning in `summarize()`.
+# ℹ In argument: `kw = list(kruskal.test(warm_start_duration ~ compilation, data = cur_data()))`.
+# ℹ In group 1: `benchmark = binary_trees`.
+# Caused by warning:
+# ! `cur_data()` was deprecated in dplyr 1.1.0.
+# ℹ Please use `pick()` instead.
+# This warning is displayed once every 8 hours.
+# Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated. 
+# 2: There were 18 warnings in `mutate()`.
+# The first warning was:
+# ℹ In argument: `cliffs_delta = tryCatch(...)`.
+# ℹ In row 1.
+# Caused by warning in `cliff.delta.default()`:
+# ! The samples are fully disjoint, using approximate Confidence Interval estimation
+# ℹ Run dplyr::last_dplyr_warnings() ([object Object])  to see the 17 remaining warnings. 
