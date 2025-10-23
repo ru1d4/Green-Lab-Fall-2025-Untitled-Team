@@ -1,69 +1,77 @@
-import heapq
+import time
+import numba
 from numba import jit
 from numba.typed import Dict, List
-from numba.types import unicode_type, int64, ListType
-import numba
+from numba.types import int64
+
 
 @jit(nopython=True)
 def dijkstra_core(edges_dict, start_idx, end_idx, node_count):
     INF = 999999
     distances = [INF] * node_count
-    distances[start_idx] = 0
     visited = [False] * node_count
-    
+    distances[start_idx] = 0
+
     for _ in range(node_count):
         min_dist = INF
         min_node = -1
-        
         for i in range(node_count):
             if not visited[i] and distances[i] < min_dist:
                 min_dist = distances[i]
                 min_node = i
-        
+
         if min_node == -1:
             break
-            
+
         visited[min_node] = True
-        
         if min_node == end_idx:
             return distances[end_idx]
-            
+
         for neighbor, weight in edges_dict[min_node]:
             if not visited[neighbor]:
                 new_dist = distances[min_node] + weight
                 if new_dist < distances[neighbor]:
                     distances[neighbor] = new_dist
-    
+
     return -1 if distances[end_idx] == INF else distances[end_idx]
 
-def dijkstra(graph, start, end):
-    nodes = list(set([start, end] + [node for node in graph.keys()]))
+
+def build_edges_dict(graph):
+    nodes = list(graph.keys())
     node_to_idx = {node: i for i, node in enumerate(nodes)}
-    
-    edges_dict = numba.typed.Dict.empty(
-        key_type=numba.types.int64,
-        value_type=numba.types.ListType(numba.types.Tuple([numba.types.int64, numba.types.int64]))
+
+    edges_dict = Dict.empty(
+        key_type=int64,
+        value_type=numba.types.ListType(numba.types.Tuple((int64, int64)))
     )
-    
+
     for i in range(len(nodes)):
-        edges_dict[i] = numba.typed.List.empty_list(
-            numba.types.Tuple([numba.types.int64, numba.types.int64])
-        )
-    
+        edges_dict[i] = List.empty_list(numba.types.Tuple((int64, int64)))
+
     for node, neighbors in graph.items():
-        if node in node_to_idx:
-            node_idx = node_to_idx[node]
-            for neighbor_info in neighbors:
-                neighbor, weight = neighbor_info
-                if neighbor in node_to_idx:
-                    neighbor_idx = node_to_idx[neighbor]
-                    edges_dict[node_idx].append((neighbor_idx, weight))
-    
+        node_idx = node_to_idx[node]
+        for neighbor, weight in neighbors:
+            neighbor_idx = node_to_idx[neighbor]
+            edges_dict[node_idx].append((neighbor_idx, weight))
+
+    return edges_dict, node_to_idx
+
+
+def dijkstra(graph, start, end, cache={}):
+    key = id(graph)
+    if key not in cache:
+        edges_dict, node_to_idx = build_edges_dict(graph)
+        cache[key] = (edges_dict, node_to_idx)
+    else:
+        edges_dict, node_to_idx = cache[key]
+
     start_idx = node_to_idx[start]
     end_idx = node_to_idx[end]
-    
-    return dijkstra_core(edges_dict, start_idx, end_idx, len(nodes))
 
+    return dijkstra_core(edges_dict, start_idx, end_idx, len(node_to_idx))
+
+
+# --- Graphs ---
 G = {
     "A": [["B", 2], ["C", 5]],
     "B": [["A", 2], ["D", 3], ["E", 1], ["F", 1]],
@@ -90,14 +98,15 @@ G3 = {
     "G": [["F", 1]],
 }
 
-if __name__ == "__main__":
-    import time
 
+if __name__ == "__main__":
     for _ in range(200000):
         dijkstra(G, "E", "C")
         dijkstra(G2, "E", "F")
         dijkstra(G3, "E", "F")
+
     print(time.time())
+
     for _ in range(200000):
         dijkstra(G, "E", "C")
         dijkstra(G2, "E", "F")
